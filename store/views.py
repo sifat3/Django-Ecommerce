@@ -92,7 +92,7 @@ def processOrder(request):
 	return JsonResponse('Payment submitted..', safe=False)
 
 def product(request, pk):
-	product = Product.object.get(id=pk)
+	product = Product.objects.get(id=pk)
 	context = {
 		"product": product
 	}
