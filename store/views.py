@@ -90,3 +90,10 @@ def processOrder(request):
 		)
 
 	return JsonResponse('Payment submitted..', safe=False)
+
+def product(request, pk):
+	product = Product.object.get(id=pk)
+	context = {
+		"product": product
+	}
+	return render(request, "product.html", context)
