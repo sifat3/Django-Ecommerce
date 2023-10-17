@@ -93,7 +93,10 @@ def processOrder(request):
 
 def product(request, pk):
 	product = Product.objects.get(id=pk)
+	data = cartData(request)
+	cartItems = data['cartItems']
 	context = {
-		"product": product
+		"product": product,
+		'cartItems': cartItems
 	}
-	return render(request, "product.html", context)
+	return render(request, "store/product.html", context)
