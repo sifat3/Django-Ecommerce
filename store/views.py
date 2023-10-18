@@ -1,9 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 import json
 import datetime
 from .models import * 
 from .utils import cookieCart, cartData, guestOrder
+from django.contrib.auth.forms import UserCreationForm 
+from django.contrib import messages
+
 
 def store(request):
 	data = cartData(request)
@@ -100,3 +103,24 @@ def product(request, pk):
 		'cartItems': cartItems
 	}
 	return render(request, "store/product.html", context)
+
+
+def login(request):
+	pass
+
+
+# def signup(request):
+# 	if request.POST == 'POST':  
+# 		form = UserCreationForm()  
+# 		if form.is_valid():  
+# 			form.save() 
+# 			messages.success(request, 'Account created successfully')
+# 			return redirect("Login")
+# 		else:
+# 			messages.success(request, 'Something went wrong')
+			
+# 	else:  
+# 		form = UserCreationForm()  
+# 		context = {'form':form}
+	
+# 	return render(request, 'store/register.html', context) 

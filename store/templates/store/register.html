@@ -1,0 +1,18 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+<h2>Register</h2>
+
+<div class="col-lg-4">
+    <div class="box-element product">
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <!-- <button type="submit" class="btn btn-outline-secondary">Submit</button> -->
+            <input type="submit" name="" id="">
+        </form>
+
+    </div>
+</div>
+
+{% endblock content %}
