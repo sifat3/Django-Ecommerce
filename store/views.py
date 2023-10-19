@@ -4,8 +4,10 @@ import json
 import datetime
 from .models import * 
 from .utils import cookieCart, cartData, guestOrder
-from django.contrib.auth.forms import UserCreationForm 
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+
 
 
 def store(request):
@@ -109,18 +111,31 @@ def login(request):
 	pass
 
 
-# def signup(request):
-# 	if request.POST == 'POST':  
-# 		form = UserCreationForm()  
-# 		if form.is_valid():  
-# 			form.save() 
-# 			messages.success(request, 'Account created successfully')
-# 			return redirect("Login")
-# 		else:
-# 			messages.success(request, 'Something went wrong')
-			
-# 	else:  
-# 		form = UserCreationForm()  
-# 		context = {'form':form}
+def signup(request):
+	data = cartData(request)
+
+	cartItems = data['cartItems']
+	order = data['order']
+	items = data['items']
+	if request.POST == 'POST':
+		username = request.POST.get('username')
+		email = request.POST.get('email')
+		name = request.POST.get('name')
+		pass1 = request.POST.get('pass1')
+		pass2 = request.POST.get('pass2')
+
+		if pass1 == pass2:
+			user = User.objects.create_user(username=username, email=email, password=pass1)
+			user.save()
+			customer = Customer.objects.create(user=user, name=name, email=email)
+			customer.save()
+			login(request, user)
+			messages.success(request, 'Account created successfully')
+			return redirect("store")
+		else:
+			messages.success(request, 'Something went wrong')
+			return redirect("register")
+
+	context = {'cartItems':cartItems}
 	
-# 	return render(request, 'store/register.html', context) 
+	return render(request, 'store/register.html', context) 
