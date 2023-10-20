@@ -141,23 +141,20 @@ def signup(request):
 	return render(request, 'store/register.html', context) 
 
 
+	
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['pass1']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            messages.info(request, 'Login successful')
+            return redirect('store')
+        else:
+            messages.info(request, 'Invalid Username or Password')
+    return render(request, 'store/login.html')
 
-def loginUser(request):
-	if request.method == "POST":
-		username = request.POST.get('username')
-		password = request.POST.get('pass1')
-		user = authenticate(username=username, password=password)
-		if user is not None:
-			login(request, user)
-			messages.success(request, "Login successful")
-			return redirect('store')
-		else:
-			messages.success(request, "Wrong credentials")
-			return redirect("login")
-	
-	else:
-		return render(request, "store/login.html")
-	
 
 def logoutUser(request):
 	logout(request.user)
