@@ -117,7 +117,7 @@ def signup(request):
 	cartItems = data['cartItems']
 	order = data['order']
 	items = data['items']
-	if request.POST == 'POST':
+	if request.method == 'POST':
 		username = request.POST.get('username')
 		email = request.POST.get('email')
 		name = request.POST.get('name')
@@ -139,3 +139,11 @@ def signup(request):
 	context = {'cartItems':cartItems}
 	
 	return render(request, 'store/register.html', context) 
+
+
+
+def loginUser(request):
+	if request.method == "POST":
+		pass
+	else:
+		return render(request, "store/login.html")

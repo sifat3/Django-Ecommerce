@@ -1,17 +1,14 @@
 {% extends 'store/main.html' %}
 {% load static %}
 {% block content %}
-<h2>Register</h2>
+<h2>Login</h2>
 
 <div class="col-lg-4">
     <div class="box-element product">
         <form method="POST" action="">
             {% csrf_token %}
             <input type="text" name="username" placeholder="Username" required><br><br>
-            <input type="text" name="name" placeholder="Name" required><br><br>
-            <input type="email" name="email" placeholder="E-mail" required><br><br>
             <input type="password" name="pass1" placeholder="Password" required><br><br>
-            <input type="password" name="pass2" placeholder="Confirm Password" required><br><br>
             <!-- <button type="submit" class="btn btn-outline-secondary">Submit</button> -->
             <input class="btn btn-outline-secondary" type="submit">
         </form>
