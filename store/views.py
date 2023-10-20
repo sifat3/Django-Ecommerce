@@ -6,7 +6,7 @@ from .models import *
 from .utils import cookieCart, cartData, guestOrder
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 
 
@@ -144,6 +144,22 @@ def signup(request):
 
 def loginUser(request):
 	if request.method == "POST":
-		pass
+		username = request.POST.get('username')
+		password = request.POST.get('pass1')
+		user = authenticate(username=username, password=password)
+		if user is not None:
+			login(request, user)
+			messages.success(request, "Login successful")
+			return redirect('store')
+		else:
+			messages.success(request, "Wrong credentials")
+			return redirect("login")
+	
 	else:
 		return render(request, "store/login.html")
+	
+
+def logoutUser(request):
+	logout(request.user)
+	messages.success(request, "Logged out successfully")
+	return redirect("store")
